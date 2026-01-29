@@ -3,10 +3,10 @@
 # Email: Rothstan@umich.edu
 # Who or what you worked with on this homework (including generative AI like ChatGPT):
 # If you worked with generative AI also add a statement for how you used it.
-# 
+# I used ChatGpt in the issue_coupon function, mostly to help figuring out how to get a random index.
 # Did your use of GenAI on this assignment align with your goals and guidelines in 
 #    your Gen AI contract? If not, why?
-
+# It aligned with my Gen AI contract because I tried my best on my own first, and then I asked ChatGpt what I was doing wrong.
 import random
 import io
 from contextlib import redirect_stdout
@@ -65,7 +65,19 @@ class CouponDispenser:
             str: message as described above
         """
         # TODO: Implement per instructions
-        pass
+        if len(self.coupon_cards)==0:
+            return "The box is empty."
+        elif name in self.customer_roster:
+            index= self.customer_roster.index(name)
+            coupon= self.issued_indices[index]
+            return f"That name already has a coupon: {coupon}"
+        else:
+            rand_coupon=random.randint(0, len(self.coupon_cards)-1)
+            self.customer_roster.append(name)
+            self.issued_indices.append(rand_coupon)
+            return self.coupon_cards[rand_coupon]
+        
+        
 
     def distribute_session(self):
         """
