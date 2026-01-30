@@ -69,7 +69,8 @@ class CouponDispenser:
             return "The box is empty."
         elif name in self.customer_roster:
             index= self.customer_roster.index(name)
-            coupon= self.issued_indices[index]
+            coupon_index= self.issued_indices[index]
+            coupon=self.coupon_cards[coupon_index]
             return f"That name already has a coupon: {coupon}"
         else:
             rand_coupon=random.randint(0, len(self.coupon_cards)-1)
@@ -113,6 +114,7 @@ class CouponDispenser:
                     if name != '':
                         result=self.issue_coupon(name)
                         print(result)
+            round_number+=1
     def tally_distribution(self):
         """
         Extra credit:
@@ -129,7 +131,16 @@ class CouponDispenser:
             None
         """
         # TODO: Implement per instructions
-        pass
+        if len(self.issued_indices)==0:
+            print("Empty")
+            return
+      
+        for i in range (len(self.coupon_cards)):
+            count=0
+            for index in self.issued_indices:
+                if index==i:
+                    count+=1
+            print(f"{self.coupon_cards[i]} distribution count: {count}.")
 
 
 def main():
@@ -150,8 +161,8 @@ def main():
     # Uncomment the lines below as you implement each function.
     box = CouponDispenser(coupon_cards)
     box.distribute_session()
-    # box.tally_distribution()
-    pass
+    box.tally_distribution()
+    
 
 
 # -----------------------
